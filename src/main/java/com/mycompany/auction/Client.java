@@ -11,29 +11,43 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.spec.IvParameterSpec;
+import org.json.JSONObject;
 
 public class Client{
+    
     DatagramSocket socket;    
     InetAddress group;
-    int port;
+    int porta;
     
+    String CHAVE_SECRETA;
+    String salt;
+    byte[] iv;
+    byte[] seed;
+    
+    String nome;
+    String senha;
+    
+    public Client(JSONObject cliente){
+        this.nome = cliente.get("nome").toString();
+        this.senha = cliente.get("senha").toString();
+        
+    }
     public Client(){       
         try {            
-            port = 4423;
+            porta = 4423;
             socket = new MulticastSocket(4423);
             group = InetAddress.getByName("227.15.3.75");
-            InetSocketAddress address = new InetSocketAddress(group, port);
+            InetSocketAddress address = new InetSocketAddress(group, porta);
             socket.joinGroup(address, NetworkInterface.getByInetAddress(group));
         } 
         catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    void receive(){
+    void recieveLogin(){
         while (true){
             try {
                 byte[] buffer = new byte[2000];
@@ -47,14 +61,12 @@ public class Client{
             }
         }        
     }
-    void send(){
-        Scanner input = new Scanner(System.in);
+    void sendLogin(JSONObject mensagem){
         while (true){
             try {
-                System.out.print("Type in the message: ");
-                String message = input.nextLine();
-                byte[] buffer = message.getBytes();
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, port);
+                String mensagemToString = mensagem.toString();
+                byte[] buffer = mensagemToString.getBytes();
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, porta);
                 socket.send(packet);
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
@@ -63,9 +75,8 @@ public class Client{
     }
     public static void main(String[] args){
         Client cliente = new Client();      
-        
-        new Thread(cliente:: receive).start();
-        new Thread(cliente:: send).start();
+                
+        //new Thread(cliente:: sendLogin).start();
     }
     
 }

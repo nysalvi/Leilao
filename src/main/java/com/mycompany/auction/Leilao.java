@@ -11,8 +11,10 @@ import org.json.JSONObject;
 
 public class Leilao {
     
-    JSONObject[] apostadores;
+    JSONObject[] apostadores;    
     Product[] produtos;
+    
+    Product produtoAtual;        
     Timestamp tempo;        
     
     public Leilao(){

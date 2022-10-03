@@ -30,8 +30,7 @@ import org.json.JSONObject;
 public class Teste {
     public static void main(String[] args) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException, IOException {
         try {
-            JSONArray credenciamento = new JSONArray();                                    
-                                    
+            JSONArray credenciamento = new JSONArray();                                                            
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");            
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
             generator.initialize(1024);                        
@@ -54,7 +53,8 @@ public class Teste {
             String senhaEncodedJoao = Base64.getEncoder().encodeToString(senhaJoaoCrip);
             joao.put("publica", publicKey.toString());
             joao.put("nome", nomeEncodedJoao);
-            joao.put("senha", senhaEncodedJoao);            
+            joao.put("senha", senhaEncodedJoao);      
+            joao.put("adasd", new byte[4]);
             byte[] t;
             ////////////////////////////////////////////////////////////////////
             

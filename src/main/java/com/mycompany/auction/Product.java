@@ -4,17 +4,25 @@
  */
 package com.mycompany.auction;
 
-/**
- *
- * @author Anton
- */
-public class Product {
+import org.json.JSONObject;
+
+public class Product{
     String descricao;
     int aposta;
-    int multiplo;
-    String comprador;
+    int multiplo;    
     
-    public Product(){
+    public Product(){        
         
+    }
+    public Product(String descricao, int aposta, int multiplo){
+        this.descricao = descricao;
+        this.aposta = aposta;
+        this.multiplo = multiplo;
+    }
+    public static Product converteProduto(JSONObject produto){
+        String descricao = produto.getString("descricao");
+        int aposta = produto.getInt("aposta");
+        int multiplo = produto.getInt("multiplo");
+        return new Product(descricao, aposta, multiplo);                   
     }
 }

@@ -51,7 +51,6 @@ public class Teste2 {
             
             JSONObject objecto = new JSONObject();
             JSONObject object1 = new JSONObject();
-            
             byte[] key = privateKey.getEncoded();
             
             byte[] messageCrypto = cipher.doFinal("Test Message".getBytes());
